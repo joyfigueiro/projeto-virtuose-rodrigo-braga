@@ -100,144 +100,15 @@
 
 
 
-        <!-- ============================= -->
-        <!-- Exit Popup -->
-        <!-- ============================= -->
-
-        <div id="vx-overlay" class="vx-hidden">
-
-          <div id="vx-modal">
-
-          <button id="vx-close">✕</button>
-
-          <div class="vx-top">
-
-          <div class="vx-badge">GUIA GRATUITO</div>
-
-          <h3>
-            Antes de sair… posso te enviar um guia rápido?
-          </h3>
-
-          <p>
-            <strong>Os 3 ajustes que mais destravam violinistas intermediários</strong>
-          </p>
-
-        </div>
-
-
-        <form
-          name="virtuose_exit_lead"
-          method="POST"
-          data-netlify="true"
-          netlify-honeypot="bot-field"
-          id="vx-form"
-          >
-
-        <input type="hidden" name="form-name" value="virtuose_exit_lead">
-
-        <p style="display:none">
-        <input name="bot-field">
-        </p>
-
-
-        <input class="vx-input" name="name" placeholder="Seu nome" required>
-
-        <input class="vx-input" name="email" type="email" placeholder="Seu email" required>
-
-        <input class="vx-input" name="whatsapp" placeholder="WhatsApp (opcional)">
-
-
-
-        <button class="vx-btn">
-        Quero receber
-        </button>
-
-
-
-        <a
-        id="vx-download"
-        href="/assets/ebook/guia_virtuose.pdf"
-        target="_blank"
-        class="vx-btn vx-hidden"
-        >
-
-        Baixar o guia
-
-        </a>
-
-
-
-        <p id="vx-success" class="vx-hidden">
-
-        Pronto! Veja o download abaixo.
-
-        </p>
-
         
-        </form>
-        setTimeout(closePopup, 2500);
-
-        </div>
-
-        </div>
-
-
+        
 
         <style>
 
-        .vx-hidden{
-        display:none;
-        }
+        
+        
 
-        #vx-overlay{
-
-        position:fixed;
-        inset:0;
-
-        background:rgba(0,0,0,.6);
-
-        display:flex;
-        align-items:center;
-        justify-content:center;
-
-        z-index:9998;
-
-        }
-
-        #vx-modal{
-
-        background:#121212;
-
-        border-radius:18px;
-
-        width:500px;
-        max-width:92vw;
-
-        padding:24px;
-
-        color:white;
-
-        border:1px solid rgba(255,255,255,.1);
-
-        box-shadow:0 20px 60px rgba(0,0,0,.5);
-
-        }
-
-        #vx-close{
-
-        position:relative;
-        top:12px;
-        right:16px;
-
-        background:none;
-        border:none;
-
-        color:white;
-
-        font-size:18px;
-        cursor:pointer;
-
-        }
+        
 
         .vx-badge{
 
@@ -298,14 +169,21 @@
 
             const overlay = document.getElementById("vx-overlay");
             const closeBtn = document.getElementById("vx-close");
+            overlay.classList.remove("vx-show");
             const form = document.getElementById("vx-form");
             const success = document.getElementById("vx-success");
 
             const STORAGE_KEY = "virtuose_popup_seen";
 
             let popupArmed = false;
+            let pageLoaded = false;
 
-              // só permite popup depois de 8 segundos
+            window.addEventListener("load", () => {
+              setTimeout(() => {
+                pageLoaded = true;
+              }, 1000);
+            });
+              // só permite popup depois de 20 segundos
             setTimeout(() => {
               popupArmed = true;
             }, 20000);
@@ -317,14 +195,14 @@
 
               if(localStorage.getItem(STORAGE_KEY)) return;
 
-              overlay.classList.remove("vx-hidden");
+              overlay.classList.remove("vx-show");
 
               localStorage.setItem(STORAGE_KEY,"1");
 
             };
 
             const closePopup = () => {
-              overlay.classList.add("vx-hidden");
+              overlay.classList.add("vx-show");
             };
 
             closeBtn.addEventListener("click", closePopup);
@@ -335,12 +213,22 @@
 
             });
 
+          // ===== ARM (só depois de X ms e depois do load) =====
+            let armed = false;
+
+            // garante que só arma depois que a página terminou de carregar
+            window.addEventListener("load", () => {
+              setTimeout(() => { armed = true; }, 20000); // 20s (seu delay)
+            });
 
             document.addEventListener("mouseout", (e) => {
-               const toEl = e.relatedTarget || e.toElement;
-                if (toEl) return;            // ainda está dentro da página
-                if (e.clientY > 0) return;   // não saiu pelo topo
-                openPopup();
+              if (!armed) return;
+
+              const toEl = e.relatedTarget || e.toElement;
+              if (toEl) return;        // ainda está dentro da página
+              if (e.clientY > 0) return; // não saiu pelo topo
+
+              openPopup();
             });
 
             form.addEventListener("submit",async(e)=>{
@@ -360,6 +248,8 @@
             success.classList.remove("vx-hidden");
 
             document.getElementById("vx-download").classList.remove("vx-hidden");
+           // setTimeout(closePopup, 2500);
+
 
             });
 
@@ -368,8 +258,35 @@
             
            
         </script>
+    <script>
+
+    let popupArmed = false;
+
+    setTimeout(() => {
+      popupArmed = true;
+    }, 20000); // 20s
 
 
+    document.addEventListener("mousemove", (e) => {
+
+      if (!popupArmed) return;
+
+      if (e.clientY <= 5) {
+
+        const popup = document.querySelector('[role="dialog"]');
+
+        if (popup && popup.dataset.customTriggered) return;
+
+        if (popup){
+          popup.dataset.customTriggered = "1";
+          popup.style.display = "flex";
+        }
+
+      }
+
+    });
+
+    </script>
 
   </body>
 
