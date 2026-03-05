@@ -268,6 +268,66 @@
       <input name="objetivo" />
     </form>
 
+    <script>
+    document.addEventListener("submit", async function(e){
+
+      const form = e.target;
+
+      if(form.name !== "virtuose_exit_lead") return;
+
+      e.preventDefault();
+
+      const data = new FormData(form);
+
+      await fetch("/",{
+        method:"POST",
+        headers:{ "Content-Type":"application/x-www-form-urlencoded" },
+        body:new URLSearchParams(data).toString()
+      });
+
+      // abre o PDF
+      window.open("/assets/ebook/guia_virtuose.pdf","_blank");
+
+    });
+    </script>
+
+    <script>
+    document.addEventListener("click", async function(e){
+
+      if(!e.target.closest("button")) return;
+
+      const dialog = document.querySelector('[role="dialog"]');
+      if(!dialog) return;
+
+      const inputs = dialog.querySelectorAll("input");
+
+      if(inputs.length < 2) return;
+
+      const name = inputs[0]?.value || "";
+      const email = inputs[1]?.value || "";
+      const whatsapp = inputs[2]?.value || "";
+
+      if(!email) return;
+
+      const data = new URLSearchParams();
+
+      data.append("form-name","virtuose_exit_lead");
+      data.append("name",name);
+      data.append("email",email);
+      data.append("whatsapp",whatsapp);
+
+      await fetch("/",{
+        method:"POST",
+        headers:{ "Content-Type":"application/x-www-form-urlencoded" },
+        body:data.toString()
+      });
+
+      // abre o PDF
+      window.open("/assets/ebook/guia_virtuose.pdf","_blank");
+
+    });
+    </script>
+
   </body>
 
 </html>
