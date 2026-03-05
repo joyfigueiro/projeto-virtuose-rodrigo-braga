@@ -83,7 +83,230 @@
     .wa-float{ padding: 10px; }
   }
 </style>
-  
+ 
+<!-- ===== Virtuose Exit Popup (controlled + premium) ===== -->
+<div id="vx-overlay" class="vx-hidden" aria-hidden="true">
+  <div id="vx-modal" role="dialog" aria-modal="true" aria-labelledby="vx-title">
+    <button id="vx-close" type="button" aria-label="Fechar">✕</button>
+
+    <div class="vx-top">
+      <div class="vx-badge">GUIA GRATUITO</div>
+      <h3 id="vx-title">Antes de sair… posso te enviar um guia rápido?</h3>
+      <p class="vx-sub">
+        <strong>“Os 3 ajustes que mais destravam violinistas intermediários”</strong><br/>
+        (e como saber se o Virtuose é o próximo passo).
+      </p>
+    </div>
+
+    <form name="virtuose_exit_lead" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="vx-form">
+      <input type="hidden" name="form-name" value="virtuose_exit_lead" />
+      <p class="vx-hidden">
+        <label>Não preencha: <input name="bot-field" /></label>
+      </p>
+
+      <label class="vx-label">Nome</label>
+      <input class="vx-input" name="name" type="text" placeholder="Seu nome" required />
+
+      <label class="vx-label">E-mail</label>
+      <input class="vx-input" name="email" type="email" placeholder="seu@email.com" required />
+
+      <label class="vx-label">WhatsApp (opcional)</label>
+      <input class="vx-input" name="whatsapp" type="tel" placeholder="(00) 00000-0000" />
+
+      <button class="vx-btn" type="submit">Quero receber</button>
+
+      <p class="vx-mini">
+        Você também pode falar direto com o Rodrigo:
+        <a id="vx-wa" target="_blank" rel="noopener">avaliar meu nível no WhatsApp</a>
+      </p>
+
+     <a id="vx-download"
+        href="/assets/ebook/guia-virtuose.pdf"
+        target="_blank"
+        class="vx-btn vx-hidden"
+        style="display:block; text-align:center; margin-top:12px;">
+        Baixar o guia (PDF)
+      </a> 
+
+      success.classList.remove("vx-hidden");
+
+      document.getElementById("vx-download").classList.remove("vx-hidden");
+      
+      <p id="vx-success" class="vx-hidden vx-success">
+        Pronto! ✅ Se quiser, me chama no WhatsApp para uma avaliação rápida.
+      </p>
+    </form>
+  </div>
+</div>
+
+<style>
+  /* overlay + modal premium */
+  #vx-overlay{
+    position:fixed; inset:0; z-index:9998;
+    display:flex; align-items:center; justify-content:center;
+    background: rgba(0,0,0,.55);
+    backdrop-filter: blur(6px);
+    padding: 18px;
+  }
+  #vx-modal{
+    width:min(520px, 96vw);
+    background: rgba(18,18,18,.92);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 18px;
+    box-shadow: 0 18px 60px rgba(0,0,0,.45);
+    color: rgba(255,255,255,.92);
+    padding: 18px 18px 16px;
+    position:relative;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  }
+  #vx-close{
+    position:absolute; right:12px; top:10px;
+    background: transparent; border: 0;
+    color: rgba(255,255,255,.7);
+    font-size: 18px; cursor:pointer;
+  }
+  .vx-top{ padding: 6px 6px 10px; }
+  .vx-badge{
+    display:inline-block; font-size:11px; letter-spacing:.14em;
+    color: rgba(255,255,255,.65);
+    border: 1px solid rgba(255,255,255,.14);
+    padding: 6px 10px; border-radius: 999px;
+    margin-bottom: 10px;
+  }
+  #vx-title{ margin:0 0 8px; font-size: 18px; }
+  .vx-sub{ margin:0 0 14px; line-height:1.35; color: rgba(255,255,255,.78); }
+
+  .vx-label{ display:block; font-size:12px; margin: 10px 0 6px; color: rgba(255,255,255,.72); }
+  .vx-input{
+    width:100%;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.03);
+    color: rgba(255,255,255,.92);
+    outline: none;
+  }
+  .vx-input:focus{ border-color: rgba(255,255,255,.22); }
+
+  .vx-btn{
+    width:100%;
+    margin-top: 12px;
+    padding: 11px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.16);
+    background: rgba(255,255,255,.08);
+    color: rgba(255,255,255,.92);
+    cursor:pointer;
+    transition: transform .16s ease, background .16s ease, border-color .16s ease;
+  }
+  .vx-btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.11); border-color: rgba(255,255,255,.22); }
+
+  .vx-mini{ margin: 12px 2px 0; font-size: 12px; color: rgba(255,255,255,.65); }
+  .vx-mini a{ color: rgba(37,211,102,.95); text-decoration: none; }
+  .vx-mini a:hover{ text-decoration: underline; }
+
+  .vx-success{ margin-top: 10px; font-size: 13px; color: rgba(255,255,255,.85); }
+  .vx-hidden{ display:none !important; }
+</style>
+
+<script>
+(() => {
+  // ===== CONFIG =====
+  const MIN_SECONDS_ON_PAGE = 30; // só permite popup depois de 30s
+  const STORAGE_KEY = "virtuose_exit_popup_seen_v1";
+  const WA_NUMBER = "554598210161"; // ex: 5531994981122
+
+  const WA_TEXT = encodeURIComponent(
+    "Oi Rodrigo! Vi o Virtuose, mas ainda tenho dúvida sobre meu nível. " +
+    "Você pode fazer uma avaliação rápida? Posso te mandar um vídeo curto tocando?"
+  );
+  const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${WA_TEXT}`;
+
+  // elements
+  const overlay = document.getElementById("vx-overlay");
+  const closeBtn = document.getElementById("vx-close");
+  const form = document.getElementById("vx-form");
+  const success = document.getElementById("vx-success");
+  const wa = document.getElementById("vx-wa");
+  wa.href = WA_LINK;
+
+  // state
+  const startedAt = Date.now();
+  const hasSeen = () => localStorage.getItem(STORAGE_KEY) === "1";
+  const markSeen = () => localStorage.setItem(STORAGE_KEY, "1");
+
+  const openPopup = () => {
+    if (hasSeen()) return;
+    const seconds = (Date.now() - startedAt) / 1000;
+    if (seconds < MIN_SECONDS_ON_PAGE) return;
+
+    overlay.classList.remove("vx-hidden");
+    overlay.setAttribute("aria-hidden", "false");
+    markSeen();
+  };
+
+  const closePopup = () => {
+    overlay.classList.add("vx-hidden");
+    overlay.setAttribute("aria-hidden", "true");
+  };
+
+  closeBtn.addEventListener("click", closePopup);
+  overlay.addEventListener("click", (e) => { if (e.target === overlay) closePopup(); });
+
+  // ===== IMPORTANT: block the old ExitPopup trigger (from bundle) and use ours =====
+  // Capture phase: stops other listeners on the same event from firing.
+  document.addEventListener("mouseout", (e) => {
+    // Exit intent: mouse leaving top of viewport
+    const isExitTop = e.clientY <= 0;
+    const toEl = e.relatedTarget || e.toElement;
+    if (!isExitTop || toEl) return;
+
+    // stop the site’s built-in exit popup from firing
+    e.stopImmediatePropagation();
+
+    // open our controlled popup
+    openPopup();
+  }, true);
+
+  // ===== Submit to Netlify Forms (AJAX) =====
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+
+    try {
+      await fetch("/", {
+        method: "POST",
+        body: new URLSearchParams(data),
+        headers: { "Content-Type": "application/x-www-form-urlencoded" }
+      });
+      success.classList.remove("vx-hidden");
+      // opcional: fecha depois de 2s
+      setTimeout(closePopup, 2000);
+    } catch (err) {
+      // fallback: submit normal
+      form.submit();
+    }
+  });
+})();
+</script>
+<!-- ===== /Virtuose Exit Popup ===== -->
+
+<style>
+  /* Mata o ExitPopup original do bundle (usa o atributo code-path) */
+  [code-path^="src/components/ExitPopup.tsx"] {
+    display: none !important;
+  }
+</style>
+
+<style>
+  /* Se houver um contêiner pai do popup antigo, esconda também */
+  [code-path^="src/components/ExitPopup.tsx"] {
+    display: none !important;
+  }
+  [code-path^="src/components/ExitPopup.tsx"] * {
+    display: none !important;
+  }
+</style>
   <body>
     <div id="root"></div>
   </body>
