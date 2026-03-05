@@ -1,313 +1,370 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Projeto Virtuose</title>
-    <script type="module" crossorigin src="./assets/index-jfl3mqON.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BFqW8b0r.css">
-  </head>
-<!-- WhatsApp Floating Button (premium) -->
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Projeto Virtuose</title>
+
+<script type="module" crossorigin src="./assets/index-jfl3mqON.js"></script>
+<link rel="stylesheet" crossorigin href="./assets/index-BFqW8b0r.css">
+
+</head>
+
+<body>
+
+<div id="root"></div>
+
+
+<!-- ============================= -->
+<!-- WhatsApp Floating Button -->
+<!-- ============================= -->
+
 <a
-  href="https://wa.me/5531994981122?text=Oi%20Rodrigo!%20Tenho%20uma%20d%C3%BAvida%20sobre%20o%20Projeto%20Virtuose."
-  target="_blank"
-  rel="noopener"
-  class="wa-float"
-  aria-label="Falar no WhatsApp"
-  title="Falar no WhatsApp"
+href="https://wa.me/554598210161?text=Oi%20Rodrigo!%20Tenho%20uma%20d%C3%BAvida%20sobre%20o%20Projeto%20Virtuose."
+target="_blank"
+rel="noopener"
+class="wa-float"
 >
-  <span class="wa-icon" aria-hidden="true">
-    <!-- ícone WhatsApp em SVG (leve e sem dependências) -->
-    <svg viewBox="0 0 32 32" width="18" height="18" fill="currentColor">
-      <path d="M19.11 17.48c-.27-.13-1.6-.79-1.85-.88-.25-.09-.43-.13-.61.13-.18.27-.7.88-.86 1.06-.16.18-.31.2-.58.07-.27-.13-1.13-.42-2.15-1.33-.79-.7-1.33-1.57-1.49-1.84-.16-.27-.02-.42.12-.55.12-.12.27-.31.4-.47.13-.16.18-.27.27-.45.09-.18.04-.34-.02-.47-.07-.13-.61-1.47-.84-2.01-.22-.53-.44-.46-.61-.46h-.52c-.18 0-.47.07-.72.34-.25.27-.95.93-.95 2.27 0 1.33.98 2.62 1.12 2.8.13.18 1.93 2.95 4.67 4.13.65.28 1.16.45 1.55.58.65.21 1.24.18 1.71.11.52-.08 1.6-.65 1.83-1.28.22-.63.22-1.16.16-1.28-.07-.11-.25-.18-.52-.31z"/>
-      <path d="M26.67 5.33A14.7 14.7 0 0 0 16.03 1 14.98 14.98 0 0 0 1 16c0 2.64.7 5.22 2.02 7.49L1 31l7.72-2.02A14.92 14.92 0 0 0 16.03 31C24.3 31 31 24.3 31 16a14.7 14.7 0 0 0-4.33-10.67zM16.03 28.4c-2.25 0-4.45-.6-6.37-1.73l-.46-.27-4.58 1.2 1.22-4.46-.3-.46A12.37 12.37 0 0 1 3.6 16c0-6.87 5.57-12.45 12.43-12.45 3.32 0 6.44 1.29 8.79 3.64A12.34 12.34 0 0 1 28.4 16c0 6.87-5.52 12.4-12.37 12.4z"/>
-    </svg>
-  </span>
-  <span class="wa-label">WhatsApp</span>
+
+<span class="wa-icon">
+
+<svg viewBox="0 0 32 32" width="18" height="18" fill="currentColor">
+<path d="M19.11 17.48c-.27-.13-1.6-.79-1.85-.88-.25-.09-.43-.13-.61.13-.18.27-.7.88-.86 1.06-.16.18-.31.2-.58.07-.27-.13-1.13-.42-2.15-1.33-.79-.7-1.33-1.57-1.49-1.84-.16-.27-.02-.42.12-.55.12-.12.27-.31.4-.47.13-.16.18-.27.27-.45.09-.18.04-.34-.02-.47-.07-.13-.61-1.47-.84-2.01-.22-.53-.44-.46-.61-.46h-.52c-.18 0-.47.07-.72.34-.25.27-.95.93-.95 2.27 0 1.33.98 2.62 1.12 2.8.13.18 1.93 2.95 4.67 4.13.65.28 1.16.45 1.55.58.65.21 1.24.18 1.71.11.52-.08 1.6-.65 1.83-1.28.22-.63.22-1.16.16-1.28-.07-.11-.25-.18-.52-.31z"/>
+</svg>
+
+</span>
+
+<span class="wa-label">WhatsApp</span>
+
 </a>
 
+
 <style>
-  .wa-float{
-    position: fixed;
-    right: 18px;
-    bottom: 18px;
-    z-index: 9999;
 
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
+.wa-float{
+position:fixed;
+right:18px;
+bottom:18px;
+z-index:9999;
 
-    padding: 10px 14px;
-    border-radius: 999px;
+display:flex;
+align-items:center;
+gap:10px;
 
-    /* visual premium/clean */
-    background: rgba(18, 18, 18, 0.78);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(10px);
+padding:10px 14px;
 
-    color: rgba(255,255,255,0.92);
-    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    font-size: 13px;
-    letter-spacing: 0.2px;
-    text-decoration: none;
+border-radius:999px;
 
-    box-shadow: 0 10px 28px rgba(0,0,0,.28);
-    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-  }
-  .wa-float:hover{
-    transform: translateY(-2px);
-    box-shadow: 0 14px 34px rgba(0,0,0,.38);
-    border-color: rgba(255,255,255,0.2);
-  }
-  .wa-icon{
-    width: 34px;
-    height: 34px;
-    border-radius: 999px;
+background:rgba(18,18,18,.8);
+border:1px solid rgba(255,255,255,.12);
 
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+color:white;
+font-family:sans-serif;
+font-size:13px;
 
-    /* toque sutil do verde, mas discreto */
-    background: rgba(37, 211, 102, 0.12);
-    color: rgba(37, 211, 102, 0.95);
-  }
-  .wa-label{
-    line-height: 1;
-    white-space: nowrap;
-  }
+text-decoration:none;
 
-  /* mobile: só o ícone, mais discreto */
-  @media (max-width: 520px){
-    .wa-label{ display:none; }
-    .wa-float{ padding: 10px; }
-  }
+backdrop-filter:blur(10px);
+
+box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+
+.wa-icon{
+width:34px;
+height:34px;
+border-radius:999px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+background:rgba(37,211,102,.15);
+color:#25D366;
+}
+
+@media(max-width:520px){
+
+.wa-label{
+display:none;
+}
+
+.wa-float{
+padding:10px;
+}
+
+}
+
 </style>
- 
-<!-- ===== Virtuose Exit Popup (controlled + premium) ===== -->
-<div id="vx-overlay" class="vx-hidden" aria-hidden="true">
-  <div id="vx-modal" role="dialog" aria-modal="true" aria-labelledby="vx-title">
-    <button id="vx-close" type="button" aria-label="Fechar">✕</button>
 
-    <div class="vx-top">
-      <div class="vx-badge">GUIA GRATUITO</div>
-      <h3 id="vx-title">Antes de sair… posso te enviar um guia rápido?</h3>
-      <p class="vx-sub">
-        <strong>“Os 3 ajustes que mais destravam violinistas intermediários”</strong><br/>
-        (e como saber se o Virtuose é o próximo passo).
-      </p>
-    </div>
 
-    <form name="virtuose_exit_lead" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="vx-form">
-      <input type="hidden" name="form-name" value="virtuose_exit_lead" />
-      <p class="vx-hidden">
-        <label>Não preencha: <input name="bot-field" /></label>
-      </p>
 
-      <label class="vx-label">Nome</label>
-      <input class="vx-input" name="name" type="text" placeholder="Seu nome" required />
+<!-- ============================= -->
+<!-- Exit Popup -->
+<!-- ============================= -->
 
-      <label class="vx-label">E-mail</label>
-      <input class="vx-input" name="email" type="email" placeholder="seu@email.com" required />
+<div id="vx-overlay" class="vx-hidden">
 
-      <label class="vx-label">WhatsApp (opcional)</label>
-      <input class="vx-input" name="whatsapp" type="tel" placeholder="(00) 00000-0000" />
+<div id="vx-modal">
 
-      <button class="vx-btn" type="submit">Quero receber</button>
+<button id="vx-close">✕</button>
 
-      <p class="vx-mini">
-        Você também pode falar direto com o Rodrigo:
-        <a id="vx-wa" target="_blank" rel="noopener">avaliar meu nível no WhatsApp</a>
-      </p>
+<div class="vx-top">
 
-     <a id="vx-download"
-        href="/assets/ebook/guia-virtuose.pdf"
-        target="_blank"
-        class="vx-btn vx-hidden"
-        style="display:block; text-align:center; margin-top:12px;">
-        Baixar o guia (PDF)
-      </a> 
+<div class="vx-badge">GUIA GRATUITO</div>
 
-      success.classList.remove("vx-hidden");
+<h3>
+Antes de sair… posso te enviar um guia rápido?
+</h3>
 
-      document.getElementById("vx-download").classList.remove("vx-hidden");
-      
-      <p id="vx-success" class="vx-hidden vx-success">
-        Pronto! ✅ Se quiser, me chama no WhatsApp para uma avaliação rápida.
-      </p>
-    </form>
-  </div>
+<p>
+<strong>Os 3 ajustes que mais destravam violinistas intermediários</strong>
+</p>
+
 </div>
 
+
+<form
+name="virtuose_exit_lead"
+method="POST"
+data-netlify="true"
+netlify-honeypot="bot-field"
+id="vx-form"
+>
+
+<input type="hidden" name="form-name" value="virtuose_exit_lead">
+
+<p style="display:none">
+<input name="bot-field">
+</p>
+
+
+<input class="vx-input" name="name" placeholder="Seu nome" required>
+
+<input class="vx-input" name="email" type="email" placeholder="Seu email" required>
+
+<input class="vx-input" name="whatsapp" placeholder="WhatsApp (opcional)">
+
+
+
+<button class="vx-btn">
+Quero receber
+</button>
+
+
+
+<a
+id="vx-download"
+href="/assets/ebook/guia-virtuose.pdf"
+target="_blank"
+class="vx-btn vx-hidden"
+>
+
+Baixar o guia
+
+</a>
+
+
+
+<p id="vx-success" class="vx-hidden">
+
+Pronto! Veja o download abaixo.
+
+</p>
+
+
+</form>
+
+</div>
+
+</div>
+
+
+
 <style>
-  /* overlay + modal premium */
-  #vx-overlay{
-    position:fixed; inset:0; z-index:9998;
-    display:flex; align-items:center; justify-content:center;
-    background: rgba(0,0,0,.55);
-    backdrop-filter: blur(6px);
-    padding: 18px;
-  }
-  #vx-modal{
-    width:min(520px, 96vw);
-    background: rgba(18,18,18,.92);
-    border: 1px solid rgba(255,255,255,.12);
-    border-radius: 18px;
-    box-shadow: 0 18px 60px rgba(0,0,0,.45);
-    color: rgba(255,255,255,.92);
-    padding: 18px 18px 16px;
-    position:relative;
-    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  }
-  #vx-close{
-    position:absolute; right:12px; top:10px;
-    background: transparent; border: 0;
-    color: rgba(255,255,255,.7);
-    font-size: 18px; cursor:pointer;
-  }
-  .vx-top{ padding: 6px 6px 10px; }
-  .vx-badge{
-    display:inline-block; font-size:11px; letter-spacing:.14em;
-    color: rgba(255,255,255,.65);
-    border: 1px solid rgba(255,255,255,.14);
-    padding: 6px 10px; border-radius: 999px;
-    margin-bottom: 10px;
-  }
-  #vx-title{ margin:0 0 8px; font-size: 18px; }
-  .vx-sub{ margin:0 0 14px; line-height:1.35; color: rgba(255,255,255,.78); }
 
-  .vx-label{ display:block; font-size:12px; margin: 10px 0 6px; color: rgba(255,255,255,.72); }
-  .vx-input{
-    width:100%;
-    padding: 10px 12px;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,.14);
-    background: rgba(255,255,255,.03);
-    color: rgba(255,255,255,.92);
-    outline: none;
-  }
-  .vx-input:focus{ border-color: rgba(255,255,255,.22); }
+.vx-hidden{
+display:none;
+}
 
-  .vx-btn{
-    width:100%;
-    margin-top: 12px;
-    padding: 11px 12px;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,.16);
-    background: rgba(255,255,255,.08);
-    color: rgba(255,255,255,.92);
-    cursor:pointer;
-    transition: transform .16s ease, background .16s ease, border-color .16s ease;
-  }
-  .vx-btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.11); border-color: rgba(255,255,255,.22); }
+#vx-overlay{
 
-  .vx-mini{ margin: 12px 2px 0; font-size: 12px; color: rgba(255,255,255,.65); }
-  .vx-mini a{ color: rgba(37,211,102,.95); text-decoration: none; }
-  .vx-mini a:hover{ text-decoration: underline; }
+position:fixed;
+inset:0;
 
-  .vx-success{ margin-top: 10px; font-size: 13px; color: rgba(255,255,255,.85); }
-  .vx-hidden{ display:none !important; }
+background:rgba(0,0,0,.6);
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+z-index:9998;
+
+}
+
+#vx-modal{
+
+background:#121212;
+
+border-radius:18px;
+
+width:500px;
+max-width:92vw;
+
+padding:24px;
+
+color:white;
+
+border:1px solid rgba(255,255,255,.1);
+
+box-shadow:0 20px 60px rgba(0,0,0,.5);
+
+}
+
+#vx-close{
+
+position:absolute;
+top:12px;
+right:16px;
+
+background:none;
+border:none;
+
+color:white;
+
+font-size:18px;
+cursor:pointer;
+
+}
+
+.vx-badge{
+
+font-size:11px;
+letter-spacing:.15em;
+
+opacity:.6;
+
+margin-bottom:10px;
+
+}
+
+.vx-input{
+
+width:100%;
+
+padding:12px;
+
+margin-top:10px;
+
+border-radius:10px;
+
+border:1px solid rgba(255,255,255,.15);
+
+background:rgba(255,255,255,.03);
+
+color:white;
+
+}
+
+.vx-btn{
+
+width:100%;
+
+margin-top:14px;
+
+padding:12px;
+
+border-radius:12px;
+
+border:1px solid rgba(255,255,255,.2);
+
+background:rgba(255,255,255,.08);
+
+color:white;
+
+cursor:pointer;
+
+}
+
 </style>
+
+
 
 <script>
+
 (() => {
-  // ===== CONFIG =====
-  const MIN_SECONDS_ON_PAGE = 30; // só permite popup depois de 30s
-  const STORAGE_KEY = "virtuose_exit_popup_seen_v1";
-  const WA_NUMBER = "554598210161"; // ex: 5531994981122
 
-  const WA_TEXT = encodeURIComponent(
-    "Oi Rodrigo! Vi o Virtuose, mas ainda tenho dúvida sobre meu nível. " +
-    "Você pode fazer uma avaliação rápida? Posso te mandar um vídeo curto tocando?"
-  );
-  const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${WA_TEXT}`;
+const overlay = document.getElementById("vx-overlay");
+const closeBtn = document.getElementById("vx-close");
+const form = document.getElementById("vx-form");
+const success = document.getElementById("vx-success");
 
-  // elements
-  const overlay = document.getElementById("vx-overlay");
-  const closeBtn = document.getElementById("vx-close");
-  const form = document.getElementById("vx-form");
-  const success = document.getElementById("vx-success");
-  const wa = document.getElementById("vx-wa");
-  wa.href = WA_LINK;
+const STORAGE_KEY = "virtuose_popup_seen";
 
-  // state
-  const startedAt = Date.now();
-  const hasSeen = () => localStorage.getItem(STORAGE_KEY) === "1";
-  const markSeen = () => localStorage.setItem(STORAGE_KEY, "1");
+const openPopup = () => {
 
-  const openPopup = () => {
-    if (hasSeen()) return;
-    const seconds = (Date.now() - startedAt) / 1000;
-    if (seconds < MIN_SECONDS_ON_PAGE) return;
+if(localStorage.getItem(STORAGE_KEY)) return;
 
-    overlay.classList.remove("vx-hidden");
-    overlay.setAttribute("aria-hidden", "false");
-    markSeen();
-  };
+overlay.classList.remove("vx-hidden");
 
-  const closePopup = () => {
-    overlay.classList.add("vx-hidden");
-    overlay.setAttribute("aria-hidden", "true");
-  };
+localStorage.setItem(STORAGE_KEY,"1");
 
-  closeBtn.addEventListener("click", closePopup);
-  overlay.addEventListener("click", (e) => { if (e.target === overlay) closePopup(); });
+};
 
-  // ===== IMPORTANT: block the old ExitPopup trigger (from bundle) and use ours =====
-  // Capture phase: stops other listeners on the same event from firing.
-  document.addEventListener("mouseout", (e) => {
-    // Exit intent: mouse leaving top of viewport
-    const isExitTop = e.clientY <= 0;
-    const toEl = e.relatedTarget || e.toElement;
-    if (!isExitTop || toEl) return;
+const closePopup = () => {
 
-    // stop the site’s built-in exit popup from firing
-    e.stopImmediatePropagation();
+overlay.classList.add("vx-hidden");
 
-    // open our controlled popup
-    openPopup();
-  }, true);
+};
 
-  // ===== Submit to Netlify Forms (AJAX) =====
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const data = new FormData(form);
 
-    try {
-      await fetch("/", {
-        method: "POST",
-        body: new URLSearchParams(data),
-        headers: { "Content-Type": "application/x-www-form-urlencoded" }
-      });
-      success.classList.remove("vx-hidden");
-      // opcional: fecha depois de 2s
-      setTimeout(closePopup, 2000);
-    } catch (err) {
-      // fallback: submit normal
-      form.submit();
-    }
-  });
+closeBtn.addEventListener("click", closePopup);
+
+overlay.addEventListener("click", (e)=>{
+
+if(e.target===overlay) closePopup();
+
+});
+
+
+document.addEventListener("mouseout",(e)=>{
+
+if(e.clientY<=0){
+
+openPopup();
+
+}
+
+});
+
+
+form.addEventListener("submit",async(e)=>{
+
+e.preventDefault();
+
+const data=new FormData(form);
+
+await fetch("/",{
+
+method:"POST",
+
+body:new URLSearchParams(data)
+
+});
+
+success.classList.remove("vx-hidden");
+
+document.getElementById("vx-download").classList.remove("vx-hidden");
+
+});
+
 })();
+
 </script>
-<!-- ===== /Virtuose Exit Popup ===== -->
 
-<style>
-  /* Mata o ExitPopup original do bundle (usa o atributo code-path) */
-  [code-path^="src/components/ExitPopup.tsx"] {
-    display: none !important;
-  }
-</style>
 
-<style>
-  /* Se houver um contêiner pai do popup antigo, esconda também */
-  [code-path^="src/components/ExitPopup.tsx"] {
-    display: none !important;
-  }
-  [code-path^="src/components/ExitPopup.tsx"] * {
-    display: none !important;
-  }
-</style>
-  <body>
-    <div id="root"></div>
-  </body>
+
+</body>
+
 </html>
