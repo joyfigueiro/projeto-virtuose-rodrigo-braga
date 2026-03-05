@@ -96,169 +96,12 @@
 
             }
 
-        </style>
+        </style>       
 
+       
 
 
-        
-        
-
-        <style>
-
-        
-        
-
-        
-
-        .vx-badge{
-
-        font-size:11px;
-        letter-spacing:.15em;
-
-        opacity:.6;
-
-        margin-bottom:10px;
-
-        }
-
-        .vx-input{
-
-        width:100%;
-
-        padding:12px;
-
-        margin-top:10px;
-
-        border-radius:10px;
-
-        border:1px solid rgba(255,255,255,.15);
-
-        background:rgba(255,255,255,.03);
-
-        color:white;
-
-        }
-
-        .vx-btn{
-
-        width:100%;
-
-        margin-top:14px;
-
-        padding:12px;
-
-        border-radius:12px;
-
-        border:1px solid rgba(255,255,255,.2);
-
-        background:rgba(255,255,255,.08);
-
-        color:white;
-
-        cursor:pointer;
-
-        }
-
-        </style>
-
-
-
-        <script>
-
-            (() => {
-
-            const overlay = document.getElementById("vx-overlay");
-            const closeBtn = document.getElementById("vx-close");
-            overlay.classList.remove("vx-show");
-            const form = document.getElementById("vx-form");
-            const success = document.getElementById("vx-success");
-
-            const STORAGE_KEY = "virtuose_popup_seen";
-
-            let popupArmed = false;
-            let pageLoaded = false;
-
-            window.addEventListener("load", () => {
-              setTimeout(() => {
-                pageLoaded = true;
-              }, 1000);
-            });
-              // só permite popup depois de 20 segundos
-            setTimeout(() => {
-              popupArmed = true;
-            }, 20000);
-
-            const openPopup = () => {
-
-              // não abre antes do tempo
-              if(!popupArmed) return;
-
-              if(localStorage.getItem(STORAGE_KEY)) return;
-
-              overlay.classList.remove("vx-show");
-
-              localStorage.setItem(STORAGE_KEY,"1");
-
-            };
-
-            const closePopup = () => {
-              overlay.classList.add("vx-show");
-            };
-
-            closeBtn.addEventListener("click", closePopup);
-
-            overlay.addEventListener("click", (e)=>{
-
-            if(e.target===overlay) closePopup();
-
-            });
-
-          // ===== ARM (só depois de X ms e depois do load) =====
-            let armed = false;
-
-            // garante que só arma depois que a página terminou de carregar
-            window.addEventListener("load", () => {
-              setTimeout(() => { armed = true; }, 20000); // 20s (seu delay)
-            });
-
-            document.addEventListener("mouseout", (e) => {
-              if (!armed) return;
-
-              const toEl = e.relatedTarget || e.toElement;
-              if (toEl) return;        // ainda está dentro da página
-              if (e.clientY > 0) return; // não saiu pelo topo
-
-              openPopup();
-            });
-
-            form.addEventListener("submit",async(e)=>{
-
-            e.preventDefault();
-
-            const data=new FormData(form);
-
-            await fetch("/",{
-
-            method:"POST",
-
-            body:new URLSearchParams(data)
-
-            });
-
-            success.classList.remove("vx-hidden");
-
-            document.getElementById("vx-download").classList.remove("vx-hidden");
-           // setTimeout(closePopup, 2500);
-
-
-            });
-
-            })();
-
-            
-           
-        </script>
-    <script>
+  <script>
 
     let popupArmed = false;
 
@@ -286,6 +129,123 @@
 
     });
 
+    </script>
+    
+    <form name="virtuose_exit_lead" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="virtuose_exit_lead" />
+      <input name="bot-field" />
+      <input name="name" />
+      <input name="email" />
+      <input name="whatsapp" />
+    </form>
+
+    <script>
+    (() => {
+      const PDF_URL = "/assets/ebook/guia_virtuose.pdf";
+      const FORM_NAME = "virtuose_exit_lead";
+      const SENT_KEY = "virtuose_exit_lead_sent_v1";
+
+      const sentAlready = () => localStorage.getItem(SENT_KEY) === "1";
+      const markSent = () => localStorage.setItem(SENT_KEY, "1");
+
+      function findPopupForm() {
+        const dialog = document.querySelector('[role="dialog"]');
+        if (!dialog) return null;
+
+        // tenta achar inputs comuns
+        const emailInput = dialog.querySelector('input[type="email"], input[name*="email" i], input[placeholder*="mail" i]');
+        if (!emailInput) return null;
+
+        const form = emailInput.closest("form") || dialog.querySelector("form");
+        if (!form) return null;
+
+        // tenta achar nome/whatsapp se existirem (não quebra se não achar)
+        const nameInput = dialog.querySelector('input[name*="name" i], input[placeholder*="nome" i]');
+        const waInput = dialog.querySelector('input[type="tel"], input[name*="whats" i], input[placeholder*="whats" i]');
+
+        return { dialog, form, emailInput, nameInput, waInput };
+      }
+
+      async function sendToNetlify(payload) {
+        const data = new URLSearchParams();
+        data.append("form-name", FORM_NAME);
+
+        Object.entries(payload).forEach(([k, v]) => {
+          if (v) data.append(k, v);
+        });
+
+        await fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: data.toString()
+        });
+      }
+
+      function attachHandler() {
+        const found = findPopupForm();
+        if (!found) return false;
+
+        const { dialog, form, emailInput, nameInput, waInput } = found;
+
+        if (form.dataset.virtuoseHooked === "1") return true;
+        form.dataset.virtuoseHooked = "1";
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const email = (emailInput.value || "").trim();
+          if (!email) return;
+
+          const name = nameInput ? (nameInput.value || "").trim() : "";
+          const whatsapp = waInput ? (waInput.value || "").trim() : "";
+
+          // envia só uma vez por visitante (pra não duplicar)
+          if (!sentAlready()) {
+            try {
+              await sendToNetlify({ name, email, whatsapp });
+              markSent();
+            } catch (err) {
+              // se falhar, a gente ainda entrega o PDF pra não perder o lead
+            }
+          }
+
+          // abre o PDF
+          window.open(PDF_URL, "_blank", "noopener");
+
+          // feedback simples dentro do popup
+          let msg = dialog.querySelector("#virtuose-lead-msg");
+          if (!msg) {
+            msg = document.createElement("div");
+            msg.id = "virtuose-lead-msg";
+            msg.style.marginTop = "12px";
+            msg.style.fontSize = "14px";
+            msg.style.opacity = "0.9";
+            msg.textContent = "Enviado ✅ Abrindo o PDF…";
+            form.appendChild(msg);
+          } else {
+            msg.textContent = "Enviado ✅ Abrindo o PDF…";
+          }
+
+          // tenta fechar o popup (se houver botão de fechar)
+          setTimeout(() => {
+            const closeBtn =
+              dialog.querySelector('button[aria-label*="fechar" i]') ||
+              dialog.querySelector('button[aria-label*="close" i]') ||
+              dialog.querySelector('button[type="button"]');
+            if (closeBtn) closeBtn.click();
+          }, 1200);
+        });
+
+        return true;
+      }
+
+      // o popup aparece depois, então observamos o DOM
+      const obs = new MutationObserver(() => attachHandler());
+      obs.observe(document.documentElement, { childList: true, subtree: true });
+
+      // tenta já no início
+      attachHandler();
+    })();
     </script>
 
   </body>
